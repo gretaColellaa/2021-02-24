@@ -73,3 +73,24 @@ class DAO():
         cursor.close()
         conn.close()
         return result
+    @staticmethod
+    def getTeams(m):
+        conn = DBConnect.get_connection()
+
+        result = []
+
+        cursor = conn.cursor(dictionary=True)
+        query = """SELECT m.TeamHomeID , m.TeamAwayID 
+                    FROM premierleague.matches m 
+                    where m.MatchID = %s
+                            """
+
+        cursor.execute(query, (m,))
+
+        for row in cursor:
+            result.append(row)
+
+        cursor.close()
+        conn.close()
+        return result
+

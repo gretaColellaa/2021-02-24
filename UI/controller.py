@@ -24,8 +24,18 @@ class Controller:
         self._view.update_page()
 
     def handle_simula(self, e):
-        pass
+        N = self._view.txt_azioni.value
+        try: int(N)
+        except: self._view.create_alert("Inserire un numero intero")
+        teamh, teama = self._model.simula(N)
 
+        self._view.txt_result.controls.clear()
+        self._view.txt_result.controls.append(ft.Text(f"il team {teamh[0]} ha segnato {teamh[1]} volte"
+                                     f"con {teamh[2]} giocatori espulsi"))
+        self._view.txt_result.controls.append(ft.Text(f"il team {teama[0]} ha segnato {teama[1]} volte"
+                                     f"con {teama[2]} giocatori espulsi"))
+
+        self._view.update_page()
 
     def fillDD(self):
         for m in sorted(self._model.getMatches()):
